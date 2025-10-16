@@ -1,39 +1,4 @@
-gunicorn
-```
-
-Your requirements.txt should look something like:
-```
-Flask
-gunicorn
-flask-cors
-# ... other dependencies
-```
-
-### **Step 2: Update Build Command in Render**
-
-Go to your Render dashboard → Settings → **Build Command** and use:
-```
-pip install -r backend/requirements.txt
-```
-
-### **Step 3: Update Start Command**
-
-Based on the logs showing `'gunicorn backend.app:app'`, your Start Command should be:
-```
-gunicorn backend.app:app
-```
-
-Or try without the backend prefix:
-```
-cd backend && gunicorn app:app
-```
-
----
-
-## **Alternative: If you want to keep it simple**
-
-If you don't want to use gunicorn, you can use Flask's built-in server:
-
-**Start Command:**
-```
-python backend/app.py
+Flask==3.0.0
+gunicorn==21.2.0
+flask-cors==4.0.0
+python-dotenv==1.0.0
