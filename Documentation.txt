@@ -1,0 +1,175 @@
+ROSPL-Project Documentation
+================================
+
+Project Overview
+----------------
+ROSPL-Project is a full-stack chatbot built using Flask (Python) for the backend and 
+HTML/CSS/JavaScript for the frontend. It integrates the Groq API to generate responses 
+from a large language model (LLM).
+
+Main Objective:
+To demonstrate a modern chatbot implementation combining an AI backend and a responsive, 
+interactive web-based frontend.
+
+------------------------------------------------------------
+System Architecture (ASCII Diagram)
+------------------------------------------------------------
+
+          +----------------------+
+          |      Frontend        |
+          |----------------------|
+          |  HTML / CSS / JS     |
+          |  - Chat UI           |
+          |  - Theme toggle      |
+          |  - Sends user input  |
+          +----------+-----------+
+                     |
+                     |  HTTP POST /api/chat
+                     v
+          +----------+-----------+
+          |      Backend         |
+          |----------------------|
+          |  Python (Flask)      |
+          |  - Receives request  |
+          |  - Sends to Groq API |
+          |  - Returns response  |
+          +----------+-----------+
+                     |
+                     |  HTTPS API call
+                     v
+          +----------+-----------+
+          |      Groq API        |
+          |----------------------|
+          |  - LLM inference     |
+          |  - Text generation   |
+          +----------------------+
+
+
+------------------------------------------------------------
+Backend Workflow
+------------------------------------------------------------
+
+[1] Frontend sends JSON payload:
+    {
+        "userMessage": "Hello!",
+        "conversationHistory": [...]
+    }
+
+[2] Flask route `/api/chat` receives data.
+
+[3] Backend formats payload and sends it to the Groq API endpoint.
+
+[4] Groq API processes text and returns a model-generated response.
+
+[5] Flask formats response into JSON and returns it to frontend.
+
+[6] Frontend updates chat interface with bot’s response.
+
+------------------------------------------------------------
+Frontend Workflow
+------------------------------------------------------------
+
++----------------------------------+
+| User types message               |
++----------------------------------+
+                 |
+                 v
++----------------------------------+
+| JavaScript captures input event  |
+| Adds user bubble to chat area    |
+| Calls fetch('/api/chat')        |
++----------------------------------+
+                 |
+                 v
++----------------------------------+
+| Waits for backend response       |
+| Shows “typing...” indicator      |
++----------------------------------+
+                 |
+                 v
++----------------------------------+
+| Receives JSON response           |
+| Adds bot bubble to chat area     |
+| Updates conversation history     |
++----------------------------------+
+
+
+------------------------------------------------------------
+Data Flow Diagram (Simplified)
+------------------------------------------------------------
+
+User -> Browser(JS) -> Flask(API) -> Groq API -> Flask -> Browser -> Display
+
+
+------------------------------------------------------------
+Environment and Dependencies
+------------------------------------------------------------
+
+Requirements:
+- Python 3.8+
+- Flask
+- Flask-CORS
+- python-dotenv
+- HTML5 / CSS3 / JavaScript
+- Groq API Key (in .env)
+
+Environment Variables (.env):
+    GROQ_API_KEY = "your_api_key_here"
+
+------------------------------------------------------------
+Setup Instructions
+------------------------------------------------------------
+
+1. Clone repository:
+       git clone https://github.com/t0nyb17/ROSPL-Project.git
+       cd ROSPL-Project
+
+2. Install Python dependencies:
+       pip install -r requirements.txt
+
+3. Create a `.env` file in project root with your Groq API key.
+
+4. Run backend server:
+       python app.py
+
+5. Open the frontend (index.html) in your browser.
+
+------------------------------------------------------------
+Folder Structure (Simplified)
+------------------------------------------------------------
+
+ROSPL-Project/
+├── backend/
+│   ├── app.py
+│   ├── requirements.txt
+│   └── .env
+├── frontend/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+└── README.md
+
+------------------------------------------------------------
+Component Interactions (ASCII Diagram)
+------------------------------------------------------------
+
+      +-----------+          +-------------+         +-----------+
+      |  Frontend | <------> |   Flask API | <-----> |  Groq API |
+      +-----------+          +-------------+         +-----------+
+           ^                        ^
+           |                        |
+           +----- user events ------+
+
+------------------------------------------------------------
+Future Improvements
+------------------------------------------------------------
+
+- Add database for storing chat logs.
+- Implement authentication for users.
+- Support multiple LLM providers.
+- Improve UI scalability using React or Vue.
+- Add streaming responses for real-time text output.
+
+------------------------------------------------------------
+End of Documentation
+------------------------------------------------------------
